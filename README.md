@@ -1,0 +1,2 @@
+# MurdokuSolver
+Solver for Murdoku
