@@ -5,10 +5,11 @@ from config import (
     GRID_SIZE,
     IMAGE_PATH,
     JSON_INDENT,
+    SOLUTION_IMAGE_PATH,
     TEMPLATE_DIR,
     VICTIM,
 )
-from cv import analyze_murdoku, parse_clues, read_clues
+from cv import analyze_murdoku, parse_clues, read_clues, render_solution
 from solver import solve_vision_outputs
 
 
@@ -37,14 +38,25 @@ def run_pipeline():
 
 
 def main():
+    puzzle_name = IMAGE_PATH.stem
+    print(f"Solving {puzzle_name}...")
+
     output = run_pipeline()
-    print(json.dumps(output, ensure_ascii=False, indent=JSON_INDENT))
+    # print(json.dumps(output, ensure_ascii=False, indent=JSON_INDENT))
 
     solver_output = output["solver"]
     if solver_output is None:
-        print("\nNo solution was found.")
+        print("Puzzle could not be solved.")
     else:
-        print(f"\nThe killer is: {solver_output['murderer']}")
+        solution_image = render_solution(
+            IMAGE_PATH,
+            solver_output,
+            output_path=SOLUTION_IMAGE_PATH,
+            grid_size=GRID_SIZE,
+            victim=VICTIM,
+        )
+        print(f"Puzzle Solved! The killer is: {solver_output['murderer']}")
+        print(f"Solution image saved to: {solution_image}")
 
 
 if __name__ == "__main__":

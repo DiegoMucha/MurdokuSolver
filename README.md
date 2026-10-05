@@ -110,7 +110,8 @@ MurdokuSolver/
 ├── main.py               # Complete application pipeline
 ├── cv/
 │   ├── board_reader.py   # Board, room, and object recognition
-│   └── ocr.py            # OCR and natural-language clue parsing
+│   ├── ocr.py            # OCR and natural-language clue parsing
+│   └── result_renderer.py # Draw solved positions on the board
 ├── solver/
 │   └── solver.py         # OR-Tools CP-SAT model
 ├── data/
@@ -138,3 +139,7 @@ from solver import solve_vision_outputs
 
 solution = solve_vision_outputs(board_output, parsed_ocr_output)
 ```
+
+After solving, `main.py` also creates `data/<puzzle_name>_solved.png`. Suspect
+names are black, the victim is green, the killer is red, and every unoccupied
+cell is marked with a black X.
