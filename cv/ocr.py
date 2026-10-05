@@ -13,6 +13,8 @@ MIN_CONFIDENCE = 50
 VICTIM_NAME = "Josh"
 
 OBJECT_NAMES = {
+    "bed": "bed",
+    "beds": "bed",
     "shelf": "shelf",
     "shelves": "shelf",
     "plant": "plant",
@@ -45,7 +47,7 @@ ORDINAL_GRID_INDEXES = {
 }
 
 NAME_PATTERN = r"[A-Z][A-Za-z'-]*"
-OBJECT_PATTERN = r"shel(?:f|ves)|plants?|carpets?|chairs?|tables?"
+OBJECT_PATTERN = r"beds?|shel(?:f|ves)|plants?|carpets?|chairs?|tables?"
 ROOM_PATTERN = r"yellow|blue|green|orange"
 OWNER_PATTERN = re.compile(
     rf"\b(?P<person>{NAME_PATTERN})\s+"
@@ -283,7 +285,7 @@ def _parse_person_clues(person, clue_text):
 def _exclusive_objects(clue_text):
     """Return objects that the clue says only this person can be on."""
     matches = re.finditer(
-        rf"\b(?:the\s+)?only\s+person\s+(?:sitting\s+)?"
+        rf"\b(?:the\s+)?only\s+(?:person|one)\s+(?:sitting\s+)?"
         rf"(?:on|on\s+top\s+of)\s+(?:a|an|the)?\s*({OBJECT_PATTERN})\b",
         clue_text,
         re.IGNORECASE,
